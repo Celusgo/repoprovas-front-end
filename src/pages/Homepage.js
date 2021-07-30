@@ -5,13 +5,15 @@ import axios from 'axios';
 import Logo from '../components/Logo';
 import { colourStyles } from '../styles/SelectStyle';
 import {useHistory} from 'react-router-dom';
+import Section from '../components/Section';
 
 
 export default function Homepage(){
     const [choice, setChoice] = useState("");
     const [options, setOptions] = useState([]);
+    const [render, setRender] = useState("");
     const history = useHistory();
-    
+    console.log(render);
     useEffect(() => {
         const request = axios.get('http://localhost:4000/inicio')
         request.then(response => {
@@ -24,32 +26,42 @@ export default function Homepage(){
 
     function eventHandler(e){
         if(e === null) return;
-        history.push(`/${choice}/${e.id}`);
+        setRender(e.name);
     }
 
     return(
         <Container>
             <Logo/>
             <ButtonContainer>
-                <Button onClick = {()=> setChoice("disciplina")}>
+                <Button onClick = {()=> {setChoice("disciplina"); setRender("")}}>
                     Procurar por disciplina
                 </Button>
-                <Button onClick = {()=> setChoice("professor")}>
+                <Button onClick = {()=> {setChoice("professor"); setRender("")}}>
                     Procurar por professor
                 </Button>
             </ButtonContainer>
+
+
             {choice === "" 
             ? ""
             : <Select
-            options={choice === "professor" ? options.teachers : choice === "disciplina" ? options.subjects : ""}
+            options={choice === "professor" ? options.teachers : choice === "disciplina" ? options.periods : ""}
             onChange = {(input) => eventHandler(input)}
             className = "selectMenu"
-            placeholder = {choice === "professor" ? "Selecione um professor" : choice === "disciplina" ? "Selecione uma disciplina" : ""}
+            placeholder = {choice === "professor" ? "Selecione um professor" : choice === "disciplina" ? "Selecione o período" : ""}
             isClearable = {true}
-            getOptionLabel= {(value) => value.name}
+            getOptionLabel= {(value) => `=> ${value.name} ${choice === "disciplina" ? "período" : ""}`}
             getOptionValue= {(value) => value.name}
             styles = {colourStyles}
+            value = {""}
             />}
+
+
+            {choice === "professor" && render !== ""
+            ? <Section type = {`Provas do(a) professor(a) ${render}`}/>
+            :choice === "disciplina" && render !== ""
+            ? <Section type = {`Disciplinas do ${render} período`} />
+            : ""}
         </Container>
     )
 };
@@ -60,12 +72,13 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     margin:150px auto;
-    border-radius:50px;
+
     .selectMenu{
         width:25%;
         margin-top:50px;
         background-color: #000;
-
+        border:2px solid white;
+        border-radius:5px;
         div{
             background-color:#000;
         }
@@ -85,7 +98,9 @@ const Button = styled.button`
     background-color: #000;
     color:#FFF;
     font-family:'Mitr';
-    border:none;
+    border:2px solid white;
     outline:none;
     font-size:30px;
+    cursor: pointer;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.7);
 `;
