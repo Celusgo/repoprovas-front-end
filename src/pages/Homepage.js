@@ -5,7 +5,8 @@ import axios from 'axios';
 import Logo from '../components/Logo';
 import { colourStyles } from '../styles/SelectStyle';
 import {useHistory} from 'react-router-dom';
-import Section from '../components/Section';
+import PeriodSection from '../components/PeriodSection';
+import TeacherSection from '../components/TeacherSection';
 
 
 export default function Homepage(){
@@ -13,7 +14,7 @@ export default function Homepage(){
     const [options, setOptions] = useState([]);
     const [render, setRender] = useState("");
     const history = useHistory();
-    console.log(render);
+
     useEffect(() => {
         const request = axios.get('http://localhost:4000/inicio')
         request.then(response => {
@@ -58,9 +59,9 @@ export default function Homepage(){
 
 
             {choice === "professor" && render !== ""
-            ? <Section type = {`Provas do(a) professor(a) ${render}`}/>
+            ? <TeacherSection type = {`Provas do(a) professor(a) ${render}`} array = {options}/>
             :choice === "disciplina" && render !== ""
-            ? <Section type = {`Disciplinas do ${render} período`} />
+            ? <PeriodSection type = {`Disciplinas do ${render} período`} array = {options.periods.filter(e => e.name === render)[0].subject}/>
             : ""}
         </Container>
     )
@@ -94,7 +95,9 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
     width: 45%;
-    border-radius:50px;
+    box-sizing:border-box;
+    padding:10px;
+    border-radius:10px;
     background-color: #000;
     color:#FFF;
     font-family:'Mitr';
