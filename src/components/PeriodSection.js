@@ -6,9 +6,9 @@ export default function PeriodSection({type, array}){
         <Container>
             {type}
             <SubjectHolder>
-                {array.map((e) =>
-                <h1>• {e.name}</h1>
-                )}
+                    {array.map((e) =>
+                        <h1>• {e.name}</h1>
+                    )}
             </SubjectHolder>
         </Container>
     )
@@ -24,12 +24,15 @@ const Container = styled.div`
     font-family: 'Mitr';
     color:#FFF;
     font-size: 30px;
+    font-weight: 500;
 `;
 
 const SubjectHolder = styled.div`
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    font-size:18px;
+    font-weight: 300;
 
     h1{
         cursor: pointer;

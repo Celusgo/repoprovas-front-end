@@ -58,7 +58,8 @@ export default function Homepage(){
                 value = {""}
                 />}
             </Container>
-            {choice === "professor" && render !== ""
+            
+                {choice === "professor" && render !== ""
                 ? <TeacherSection type = {`Provas do(a) professor(a) ${render}`} array = {options}/>
                 :choice === "disciplina" && render !== ""
                 ? <PeriodSection type = {`Disciplinas do ${render} período`} array = {options.periods.filter(e => e.name === render)[0].subject}/>
