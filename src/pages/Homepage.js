@@ -31,39 +31,39 @@ export default function Homepage(){
     }
 
     return(
-        <Container>
-            <Logo/>
-            <ButtonContainer>
-                <Button onClick = {()=> {setChoice("disciplina"); setRender("")}}>
-                    Procurar por disciplina
-                </Button>
-                <Button onClick = {()=> {setChoice("professor"); setRender("")}}>
-                    Procurar por professor
-                </Button>
-            </ButtonContainer>
+        <>
+            <Container>
+                <Logo/>
+                <ButtonContainer>
+                    <Button onClick = {()=> {setChoice("disciplina"); setRender("")}}>
+                        Procurar por disciplina
+                    </Button>
+                    <Button onClick = {()=> {setChoice("professor"); setRender("")}}>
+                        Procurar por professor
+                    </Button>
+                </ButtonContainer>
 
 
-            {choice === "" 
-            ? ""
-            : <Select
-            options={choice === "professor" ? options.teachers : choice === "disciplina" ? options.periods : ""}
-            onChange = {(input) => eventHandler(input)}
-            className = "selectMenu"
-            placeholder = {choice === "professor" ? "Selecione um professor" : choice === "disciplina" ? "Selecione o período" : ""}
-            isClearable = {true}
-            getOptionLabel= {(value) => `=> ${value.name} ${choice === "disciplina" ? "período" : ""}`}
-            getOptionValue= {(value) => value.name}
-            styles = {colourStyles}
-            value = {""}
-            />}
-
-
+                {choice === "" 
+                ? ""
+                : <Select
+                options={choice === "professor" ? options.teachers : choice === "disciplina" ? options.periods : ""}
+                onChange = {(input) => eventHandler(input)}
+                className = "selectMenu"
+                placeholder = {choice === "professor" ? "Selecione um professor" : choice === "disciplina" ? "Selecione o período" : ""}
+                isClearable = {true}
+                getOptionLabel= {(value) => `=> ${value.name} ${choice === "disciplina" ? "período" : ""}`}
+                getOptionValue= {(value) => value.name}
+                styles = {colourStyles}
+                value = {""}
+                />}
+            </Container>
             {choice === "professor" && render !== ""
-            ? <TeacherSection type = {`Provas do(a) professor(a) ${render}`} array = {options}/>
-            :choice === "disciplina" && render !== ""
-            ? <PeriodSection type = {`Disciplinas do ${render} período`} array = {options.periods.filter(e => e.name === render)[0].subject}/>
-            : ""}
-        </Container>
+                ? <TeacherSection type = {`Provas do(a) professor(a) ${render}`} array = {options}/>
+                :choice === "disciplina" && render !== ""
+                ? <PeriodSection type = {`Disciplinas do ${render} período`} array = {options.periods.filter(e => e.name === render)[0].subject}/>
+                : ""}
+        </>
     )
 };
 
@@ -72,7 +72,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin:150px auto;
+    margin:150px auto 0 auto;
 
     .selectMenu{
         width:25%;
