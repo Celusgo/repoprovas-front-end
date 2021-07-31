@@ -39,7 +39,12 @@ export default function Send(){
     }, []);
 
     function sendData(){
-        console.log("Tudo certo")
+        const body = {
+            link,
+            category,
+            teacher: chosenTeacher,
+            subject: disciplinehhhhhhhb
+        }
     }
 
     return(
