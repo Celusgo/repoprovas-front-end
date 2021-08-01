@@ -8,7 +8,6 @@ export default function Tests(){
     const [options, setOptions] = useState([]);
     const [setArray, setSetArray] = useState([]);
     const { id } = useParams();
-    console.log(options);
 
     useEffect(() => {
         const request = axios.get(`http://localhost:4000/disciplines/${id}`);
@@ -21,8 +20,9 @@ export default function Tests(){
     return(
         <Container>
             <Logo/>
+            {setArray.length === 0 ? "" : <Information>Provas da disciplina {options[0].subject.name}</Information>}
             {setArray.length === 0
-            ? <Empty>Nada por aqui ainda :(</Empty>
+            ? <Information>Nada por aqui ainda :(</Information>
             : setArray.map((e, i) => {
                 return <div key = {i} className = "testsHolder">
                             <Title>{e}</Title>
@@ -74,9 +74,10 @@ const Title = styled.h1`
     margin-bottom:10px;
 `;
 
-const Empty = styled.h1`
+const Information = styled.h1`
     font-family: 'Mitr';
     font-size: 40px;
     font-weight: 500;
     color:white;
+    margin-bottom:30px;
 `;

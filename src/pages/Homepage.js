@@ -12,7 +12,6 @@ export default function Homepage(){
     const [options, setOptions] = useState([]);
     const [render, setRender] = useState("");
     const [teacherId, setTeacherId] = useState("");
-    console.log(options);
 
     useEffect(() => {
         const request = axios.get('http://localhost:4000/inicio')

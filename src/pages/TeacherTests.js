@@ -14,15 +14,15 @@ export default function TeacherTests(){
         request.then((response) => {
             setOptions(response.data);
             setSetArray([...new Set(response.data.map(e => e.name))]);
-            console.log(response.data)
         });
     }, [id, teacherId]);
 
     return(
         <Container>
             <Logo/>
+            {setArray.length === 0 ? "" : <Information>Provas do(a) professor(a) {options[0].teacher.name} da disciplina {options[0].subject.name}</Information>}
             {setArray.length === 0
-            ? <Empty>Nada por aqui ainda :(</Empty>
+            ? <Information>Nada por aqui ainda :(</Information>
             : setArray.map((e, i) => {
                 return <div key = {i} className = "testsHolder">
                             <Title>{e}</Title>
@@ -74,9 +74,10 @@ const Title = styled.h1`
     margin-bottom:10px;
 `;
 
-const Empty = styled.h1`
+const Information = styled.h1`
     font-family: 'Mitr';
     font-size: 40px;
     font-weight: 500;
     color:white;
+    margin-bottom: 30px;
 `;
