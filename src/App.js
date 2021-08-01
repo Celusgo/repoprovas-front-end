@@ -4,6 +4,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import Header from './components/Header';
 import Homepage from './pages/Homepage';
 import Send from './pages/Send';
+import Tests from './pages/Tests'
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
          <Switch>
             <Route path="/" exact component = {Homepage}/>
             <Route path="/enviar" exact component = {Send}/>
+            <Route path="/disciplines/:id" exact component = {Tests}/>
          </Switch>
        </Router>
     )

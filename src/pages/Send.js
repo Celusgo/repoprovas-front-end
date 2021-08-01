@@ -2,7 +2,8 @@ import styled from "styled-components";
 import Logo from "../components/Logo";
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import Select from 'react-select'
+import Select from 'react-select';
+import {useHistory} from 'react-router-dom';
 
 export default function Send(){
 
@@ -12,11 +13,7 @@ export default function Send(){
     const [discipline, setDiscipline] = useState("");
     const [chosenTeacher, setChosenTeacher] = useState("");
     const [category, setCategory] = useState("");
-    
-    console.log(discipline);
-    console.log(chosenTeacher);
-    console.log(category);
-    console.log(link);
+    const [year, setYear] = useState("");
 
     const categories = [
         { name: 'P1', label: 'P1' },
@@ -27,6 +24,7 @@ export default function Send(){
       ];
       
     const month = new Date().getMonth()+1;
+    const history = useHistory();
 
     useEffect(() => {
         const request = axios.get('http://localhost:4000/send')
@@ -40,11 +38,17 @@ export default function Send(){
 
     function sendData(){
         const body = {
+            name: `${year.slice(0, 4)}.${parseInt(year.slice(5, 7) <= 6 ? "1" : "2")}`,
             link,
             category,
             teacher: chosenTeacher,
-            subject: disciplinehhhhhhhb
+            subject: discipline
         }
+        const request = axios.post('http://localhost:4000/send', body);
+        request.then(() => {
+            alert("Sua prova foi enviada com sucesso!");
+            history.push("/");
+        });
     }
 
     return(
@@ -60,7 +64,7 @@ export default function Send(){
                 </div>
                 <div>
                     <h1>2) Agora, nos diga o ano e o mês em que essa prova foi aplicada:</h1>
-                    <input type="month" max = {`${new Date().getFullYear()}-${month < 10 ? '0' + month : "" + month}`} onChange = {(e)=>console.log(e.target.value.slice(5))}/>
+                    <input type="month" max = {`${new Date().getFullYear()}-${month < 10 ? '0' + month : "" + month}`} onChange = {(e)=>setYear(e.target.value)}/>
                 </div>
 
 
@@ -101,7 +105,7 @@ export default function Send(){
                     </div>
 
                 </ChoicesHolder>
-                    {link !== "" && category !== "" && chosenTeacher !== "" && discipline !== ""
+                    {link !== "" && category !== "" && chosenTeacher !== "" && discipline !== "" && year !== ""
                     ?<div className = "buttonHolder">
                         <SendButton onClick = {()=>sendData()}>
                             Enviar prova

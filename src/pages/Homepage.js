@@ -4,16 +4,14 @@ import Select from 'react-select'
 import axios from 'axios';
 import Logo from '../components/Logo';
 import { colourStyles } from '../styles/SelectStyle';
-import {useHistory} from 'react-router-dom';
-import PeriodSection from '../components/PeriodSection';
-import TeacherSection from '../components/TeacherSection';
+import Section from '../components/Section';
 
 
 export default function Homepage(){
     const [choice, setChoice] = useState("");
     const [options, setOptions] = useState([]);
     const [render, setRender] = useState("");
-    const history = useHistory();
+    const [teacherId, setTeacherId] = useState("");
 
     useEffect(() => {
         const request = axios.get('http://localhost:4000/inicio')
@@ -28,6 +26,7 @@ export default function Homepage(){
     function eventHandler(e){
         if(e === null) return;
         setRender(e.name);
+        setTeacherId(e.id);
     }
 
     return(
@@ -47,7 +46,7 @@ export default function Homepage(){
                 {choice === "" 
                 ? ""
                 : <Select
-                options={choice === "professor" ? options.teachers : choice === "disciplina" ? options.periods : ""}
+                options={choice === "professor" ? options.teacherSubjects : choice === "disciplina" ? options.periods : ""}
                 onChange = {(input) => eventHandler(input)}
                 className = "selectMenu"
                 placeholder = {choice === "professor" ? "Selecione um professor" : choice === "disciplina" ? "Selecione o período" : ""}
@@ -60,9 +59,9 @@ export default function Homepage(){
             </Container>
             
                 {choice === "professor" && render !== ""
-                ? <TeacherSection type = {`Provas do(a) professor(a) ${render}`} array = {options}/>
+                ? <Section type = "teachers" render = {render} teacherId = {teacherId} array = {options.teacherSubjects.filter(e => e.name === render)[0].subject}/>
                 :choice === "disciplina" && render !== ""
-                ? <PeriodSection type = {`Disciplinas do ${render} período`} array = {options.periods.filter(e => e.name === render)[0].subject}/>
+                ? <Section type = "disciplines" render = {render} array = {options.periods.filter(e => e.name === render)[0].subject}/>
                 : ""}
         </>
     )
@@ -104,7 +103,13 @@ const Button = styled.button`
     font-family:'Mitr';
     border:2px solid white;
     outline:none;
-    font-size:30px;
+    font-size:20px;
     cursor: pointer;
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.7);
+
+        :hover{
+            color: #ffcd00;
+            border:2px solid #ffcd00;
+            box-shadow: 0 0 1em rgba(255, 205, 0, 0.7);
+        }
 `;

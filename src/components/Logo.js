@@ -10,7 +10,7 @@ export default function Logo(){
 
 const LogoContainer = styled.div `
     color:#FFF;
-    font-family:'Monoton';
+    font-family:'Press Start 2P';
     font-size: 80px;
     margin-bottom: 100px;
 `;
