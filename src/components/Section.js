@@ -3,7 +3,6 @@ import {useHistory} from 'react-router-dom';
 
 export default function Section({type, array, render, teacherId}){
 
-    console.log(teacherId);
     const history = useHistory();
 
     function redirect(id){
@@ -20,9 +19,9 @@ export default function Section({type, array, render, teacherId}){
         <Container>
             {type === 'teachers' ? `Disciplina(s) ministrada(s) pelo(a) professor(a) ${render}` : `Disciplinas do ${render} período`}
             <SubjectHolder>
-                    {array.map((e) =>
+                    {array.map((e, i) =>
                         <div>
-                            <h1 key = {e.id} onClick = {()=> redirect(e.id)}>• {e.name}</h1>
+                            <h1 key = {i} onClick = {()=> redirect(e.id)}>• {e.name}</h1>
                         </div>
                     )}
             </SubjectHolder>

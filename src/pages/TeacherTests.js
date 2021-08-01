@@ -4,19 +4,19 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router";
 import axios from 'axios';
 
-export default function Tests(){
+export default function TeacherTests(){
     const [options, setOptions] = useState([]);
     const [setArray, setSetArray] = useState([]);
-    const { id } = useParams();
-    console.log(options);
+    const { teacherId, id } = useParams();
 
     useEffect(() => {
-        const request = axios.get(`http://localhost:4000/disciplines/${id}`);
+        const request = axios.get(`http://localhost:4000/teachers/${teacherId}/${id}`);
         request.then((response) => {
             setOptions(response.data);
             setSetArray([...new Set(response.data.map(e => e.name))]);
+            console.log(response.data)
         });
-    }, [id]);
+    }, [id, teacherId]);
 
     return(
         <Container>
