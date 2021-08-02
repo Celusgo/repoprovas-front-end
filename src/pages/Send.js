@@ -14,6 +14,7 @@ export default function Send(){
     const [chosenTeacher, setChosenTeacher] = useState("");
     const [category, setCategory] = useState("");
     const [year, setYear] = useState("");
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const categories = [
         { name: 'P1', label: 'P1' },
@@ -46,6 +47,7 @@ export default function Send(){
         }
         const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/send`, body);
         request.then(() => {
+            setIsDisabled(false);
             alert("Sua prova foi enviada com sucesso!");
             history.push("/");
         });
@@ -63,11 +65,11 @@ export default function Send(){
             <FormHolder>
                 <div>
                     <h1>1) Para começar, coloque aqui o link da sua prova (no formato PDF):</h1>
-                    <input placeholder="Coloque o link do seu pdf aqui..." onChange = {(e)=>setLink(e.target.value)}/>
+                    <input disabled = {isDisabled} placeholder="Coloque o link do seu pdf aqui..." onChange = {(e)=>setLink(e.target.value)}/>
                 </div>
                 <div>
                     <h1>2) Agora, nos diga o ano e o mês em que essa prova foi aplicada:</h1>
-                    <input type="month" max = {`${new Date().getFullYear()}-${month < 10 ? '0' + month : "" + month}`} onChange = {(e)=>setYear(e.target.value)}/>
+                    <input disabled = {isDisabled} type="month" max = {`${new Date().getFullYear()}-${month < 10 ? '0' + month : "" + month}`} onChange = {(e)=>setYear(e.target.value)}/>
                 </div>
 
 
@@ -81,6 +83,7 @@ export default function Send(){
                         placeholder = "Escolha a disciplina"
                         getOptionLabel= {(value) => value.name}
                         getOptionValue= {(value) => value.name}
+                        disabled = {isDisabled}
                         />
 
                         {teacher === ""
@@ -93,6 +96,7 @@ export default function Send(){
                         getOptionLabel= {(value) => value.name}
                         getOptionValue= {(value) => value.name}
                         value={""}
+                        disabled = {isDisabled}
                         />}
 
                         {teacher === ""
@@ -104,13 +108,14 @@ export default function Send(){
                         placeholder = "Escolha uma categoria"
                         getOptionLabel= {(value) => value.name}
                         getOptionValue= {(value) => value.name}
+                        disabled = {isDisabled}
                         />}
                     </div>
 
                 </ChoicesHolder>
                     {link !== "" && category !== "" && chosenTeacher !== "" && discipline !== "" && year !== ""
                     ?<div className = "buttonHolder">
-                        <SendButton onClick = {()=>sendData()}>
+                        <SendButton onClick = {()=>{setIsDisabled(true); sendData()}}>
                             Enviar prova
                         </SendButton>
                     </div>
