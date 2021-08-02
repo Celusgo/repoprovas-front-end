@@ -10,7 +10,7 @@ export default function TeacherTests(){
     const { teacherId, id } = useParams();
 
     useEffect(() => {
-        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/${teacherId}/${id}`);
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/teachers/${teacherId}/${id}`);
         request.then((response) => {
             setOptions(response.data);
             setSetArray([...new Set(response.data.map(e => e.name))]);
