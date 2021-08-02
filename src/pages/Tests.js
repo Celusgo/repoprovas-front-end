@@ -10,7 +10,7 @@ export default function Tests(){
     const { id } = useParams();
 
     useEffect(() => {
-        const request = axios.get(`https://repoprovas-celu.herokuapp.com/${id}`);
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/${id}`);
         request.then((response) => {
             setOptions(response.data);
             setSetArray([...new Set(response.data.map(e => e.name))]);

@@ -14,7 +14,7 @@ export default function Homepage(){
     const [teacherId, setTeacherId] = useState("");
 
     useEffect(() => {
-        const request = axios.get('https://repoprovas-celu.herokuapp.com//inicio')
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/inicio`)
         request.then(response => {
             setOptions(response.data);
         });
