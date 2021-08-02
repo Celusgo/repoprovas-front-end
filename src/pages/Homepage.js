@@ -14,12 +14,12 @@ export default function Homepage(){
     const [teacherId, setTeacherId] = useState("");
 
     useEffect(() => {
-        const request = axios.get('http://localhost:4000/inicio')
+        const request = axios.get('https://repoprovas-celu.herokuapp.com//inicio')
         request.then(response => {
             setOptions(response.data);
         });
-        request.catch((error) => {
-            alert(error.response.data);
+        request.catch(() => {
+            alert("Ocorreu um erro.");
         });
     }, []);
 

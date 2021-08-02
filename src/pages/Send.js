@@ -27,7 +27,7 @@ export default function Send(){
     const history = useHistory();
 
     useEffect(() => {
-        const request = axios.get('http://localhost:4000/send')
+        const request = axios.get('https://repoprovas-celu.herokuapp.com/send')
         request.then(response => {
             setOptions(response.data.subjects);
         });
@@ -44,10 +44,13 @@ export default function Send(){
             teacher: chosenTeacher,
             subject: discipline
         }
-        const request = axios.post('http://localhost:4000/send', body);
+        const request = axios.post('https://repoprovas-celu.herokuapp.com/send', body);
         request.then(() => {
             alert("Sua prova foi enviada com sucesso!");
             history.push("/");
+        });
+        request.catch(() => {
+            alert("Ocorreu um erro.");
         });
     }
 

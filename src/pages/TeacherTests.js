@@ -10,10 +10,13 @@ export default function TeacherTests(){
     const { teacherId, id } = useParams();
 
     useEffect(() => {
-        const request = axios.get(`http://localhost:4000/teachers/${teacherId}/${id}`);
+        const request = axios.get(`https://repoprovas-celu.herokuapp.com/${teacherId}/${id}`);
         request.then((response) => {
             setOptions(response.data);
             setSetArray([...new Set(response.data.map(e => e.name))]);
+        });
+        request.catch(() => {
+            alert("Ocorreu um erro.");
         });
     }, [id, teacherId]);
 

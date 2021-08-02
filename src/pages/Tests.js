@@ -10,10 +10,13 @@ export default function Tests(){
     const { id } = useParams();
 
     useEffect(() => {
-        const request = axios.get(`http://localhost:4000/disciplines/${id}`);
+        const request = axios.get(`https://repoprovas-celu.herokuapp.com/${id}`);
         request.then((response) => {
             setOptions(response.data);
             setSetArray([...new Set(response.data.map(e => e.name))]);
+        });
+        request.catch(() => {
+            alert("Ocorreu um erro.");
         });
     }, [id]);
 
